@@ -51,7 +51,7 @@ for image in list_of_images:
 
 
 
-ecr_registry_prefix = "403134974177.dkr.ecr.us-gov-west-1.amazonaws.com/dkp"
+ecr_registry_prefix = "403134974177.dkr.ecr.us-gov-west-1.amazonaws.com"
 
 
 for print_image in all_images:
@@ -63,17 +63,21 @@ for print_image in all_images:
     print(f"tagging image {print_image} as {new_image_tag}")
 
     # retag it to ecr registry
-    os.system(f"docker tag {print_image} {new_image_tag}")
+    print("print_image: ", print_image)
+    print("new_image_tag: ", new_image_tag)
+    #os.system(f"docker tag {print_image} {new_image_tag}")
     time.sleep(1)
     print("""
 
      NOW PUSHING
 
-
+    
 
     """)
+
+    #os.system(f"aws ecr create-repository --repository-name {}")
     # push image to registry
-    os.system(f"docker push {new_image_tag}")
+    #os.system(f"docker push {new_image_tag}")
 
 
 
