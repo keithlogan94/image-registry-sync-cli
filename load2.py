@@ -60,12 +60,11 @@ for print_image in all_images:
     time.sleep(1)
     new_image_tag = print_image.replace(local_repo_url_without_protocol, ecr_registry_prefix)
 
+    tag_without_prefix = new_image_tag.replace(ecr_registry_prefix + '/', '')
     print(f"tagging image {print_image} as {new_image_tag}")
 
     # retag it to ecr registry
-    print("print_image: ", print_image)
-    print("new_image_tag: ", new_image_tag)
-    #os.system(f"docker tag {print_image} {new_image_tag}")
+    os.system(f"docker tag {print_image} {new_image_tag}")
     time.sleep(1)
     print("""
 
@@ -75,9 +74,9 @@ for print_image in all_images:
 
     """)
 
-    #os.system(f"aws ecr create-repository --repository-name {}")
+    os.system(f"aws ecr create-repository --repository-name {tag_without_prefix}")
     # push image to registry
-    #os.system(f"docker push {new_image_tag}")
+    os.system(f"docker push {new_image_tag}")
 
 
 
