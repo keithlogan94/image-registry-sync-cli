@@ -3,11 +3,12 @@ import json
 import os
 import time
 
-local_repo_url = "http://localhost:42303"
-local_repo_url_without_protocol = "localhost:42303"
+local_repo_url = "http://localhost:5000"
+local_repo_url_without_protocol = "localhost:5000"
+ecr_registry_prefix = "403134974177.dkr.ecr.us-gov-west-1.amazonaws.com"
 
 # login to docker
-os.system("aws ecr get-login-password | docker login --username AWS --password-stdin 403134974177.dkr.ecr.us-gov-west-1.amazonaws.com")
+os.system(f"aws ecr get-login-password | docker login --username AWS --password-stdin {ecr_registry_prefix}")
 
 # sleep for a little after logging in
 time.sleep(5)
@@ -51,7 +52,6 @@ for image in list_of_images:
 
 
 
-ecr_registry_prefix = "403134974177.dkr.ecr.us-gov-west-1.amazonaws.com"
 
 
 for print_image in all_images:
@@ -60,7 +60,7 @@ for print_image in all_images:
     time.sleep(1)
     new_image_tag = print_image.replace(local_repo_url_without_protocol, ecr_registry_prefix)
 
-    tag_without_prefix = new_image_tag.replace(ecr_registry_prefix + '/', '')
+    tag_without_prefix = new_image_tag.replace(ecr_registry_prefix + '/', '').split(':')[0]
     print(f"tagging image {print_image} as {new_image_tag}")
 
     # retag it to ecr registry
@@ -73,6 +73,8 @@ for print_image in all_images:
     
 
     """)
+
+
 
     os.system(f"aws ecr create-repository --repository-name {tag_without_prefix}")
     # push image to registry
