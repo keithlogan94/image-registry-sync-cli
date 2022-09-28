@@ -71,5 +71,6 @@ class Image:
         for image in images:
             file.write(image.get_pull_command(ctr_cli) + "\n")
         file.close()
+        print("pull.sh created")
 
 
