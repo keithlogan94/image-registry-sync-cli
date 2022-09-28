@@ -34,6 +34,7 @@ def get_list_of_images(local_repo_url="http://localhost:5000", local_repo_url_wi
 
             all_images.append(image_pull_str)
 
+    return all_images
 
 
 

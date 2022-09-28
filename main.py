@@ -35,7 +35,7 @@ def main():
     elif args.action == "build_pull_script":
         Image.create_pull_image_bash(args.local_registry_url_without_protocol,
                                   args.remote_registry,
-                                     args.cri_ctl)
+                                     args.ctr_cli)
     else:
         parser.error("args.action not found")
 
